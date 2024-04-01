@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> My first Open Weather API</title>\
+  <style> 
+    body{ 
+      background-image:url(nm.jpg);
+      background-repeat: no-repeat;
+      background-size: 100%;
+    } 
+  </style>
+</head>
+<body style="text-align: center;"> <!--code to place the obtained information in the center-->
+      <h2> <span id="location"></span></h2> <!--my assigned location-->
+      <span style="width: 100%;">Chance of rain:<h6 style="display: inline; margin-left: 10px;" id="weather"></h6></span>
+      <h4>Current Temperature&nbsp;:&nbsp;<span id="temp"></span><sup>o</sup>C</h4>
+      <h4>Max. Temperature&nbsp;:&nbsp;<span id="temp_max"></span><sup>o</sup>C</h4>
+      <h4>Min. Temperature&nbsp;:&nbsp;<span id="temp_min"></span><sup>o</sup>C</h4>
+      <h4>Humidity&nbsp;:&nbsp;<span id="humidity"></span>%</h4>
+      <h4>Wind&nbsp;:&nbsp;<span id="wind"></span>m/s</h4>
+
+<script type="text/javascript">
+link = "https://api.openweathermap.org/data/2.5/weather?q=Aurora&units=metric&appid=503f248e7ff174b62ff1fb3e9c5e7696";
+var request = new XMLHttpRequest(); //data obtained from openweatherapi
+request.open('GET',link,true);
+request.onload = function(){
+ var obj = JSON.parse(this.response);
+ console.log(obj);
+ //requesting the datas obatained from openweather api
+ document.getElementById('weather').innerHTML = obj.weather[0].description;
+ document.getElementById('location').innerHTML = obj.name;
+ document.getElementById('temp').innerHTML = obj.main.temp;
+ document.getElementById('temp_max').innerHTML = obj.main.temp_max;
+ document.getElementById('temp_min').innerHTML = obj.main.temp_min; 
+ document.getElementById('humidity').innerHTML = obj.main.humidity;
+ document.getElementById('wind').innerHTML = obj.wind.speed;
+
+ if (request.status >= 200 && request.status < 400) {
+  var temp = obj.main.temp;
+ }
+ 
+ else{
+  console.log("Please Check the city");
+ }
+}
+request.send();
+</script>
+</body>
+</html>
